@@ -49,7 +49,7 @@ contract Vesting {
             transferAmount = availableParts * amountPart;
         }
         require(transferAmount != 0, "Nothing to withdraw");
-        payable(msg.sender).transfer(transferAmount);
         accounts[msg.sender].withdrawn = account.withdrawn + availableParts;
+        payable(msg.sender).transfer(transferAmount);
     }
 }
