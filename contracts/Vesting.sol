@@ -32,7 +32,6 @@ contract Vesting {
         accounts[account].vestingStart = block.timestamp;
         accounts[account].parts = parts;
         accounts[account].accuracyInSeconds = accuracyInSeconds;
-        accounts[account].withdrawn = 0;
     }
     
     function claim() public {
@@ -43,7 +42,7 @@ contract Vesting {
         require(timeDifferent > account.withdrawn, "Nothing to withdraw");
         uint availableParts = timeDifferent - account.withdrawn;
         uint transferAmount;
-        if (availableParts + account.withdrawn == account.parts) {
+        if (availableParts + account.withdrawn >= account.parts) {
             transferAmount = account.amount - account.withdrawn * amountPart;
         } else {
             transferAmount = availableParts * amountPart;
